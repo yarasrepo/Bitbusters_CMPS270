@@ -16,6 +16,9 @@ int getSize(const Set* set);
 
 void printSet(const Set* set);
 
+char** SettoArr(const Set* set);
+void freeWordArr(char** wordArr, int size);
+
 void removeFromSet(Set* set, const char* element);
 
 void clearSet(Set* set);
