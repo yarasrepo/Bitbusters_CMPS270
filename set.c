@@ -93,6 +93,37 @@ void printSet(const Set* set){
     printf("\n");
 }
 
+char** SettoArr(const Set* set) {
+    if (set == NULL || set->head == NULL) {
+        return NULL;
+    }
+
+    int s = getSize(set);
+    char** wordArr = malloc(s * sizeof(char*));
+    
+    if (wordArr == NULL) {
+        return NULL;
+    }
+
+    SetNode* current = set->head;
+    int i = 0;
+    while (current != NULL && i < s) {
+        wordArr[i] = current->element;
+        current = current->next;
+        i++;
+    }
+
+    return wordArr;
+}
+
+void freeWordArr(char** wordArr, int size) {
+    for (int i = 0; i < size; ++i) {
+        free(wordArr[i]);
+    }
+    
+    free(wordArr);
+}
+
 void removeFromSet(Set* set, const char* element) {
     if (set == NULL || element == NULL) {
         return; 
