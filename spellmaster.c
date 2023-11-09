@@ -3,7 +3,36 @@
 #include <string.h>
 #include "set.h"
 #include "charmap.h"
+const char name[]= "spellmaster";
 
+char* Mode(char lastChar, CharMap* charMap,char* mode){
+    int max=0;
+    char* word=NULL;
+    int wordSetSize= getSize(charMap->map[idxOfKey(lastChar)]);
+    char** options= SettoArr(charMap->map[idxOfKey(lastChar)]);
+    int minSetSize = size_of(options)/size_of(options[0]);
+    
+    for (int i=0; i<wordSetSize; i++){
+        char s= options[i][strlen(options[i]) - 1];
+        int setSize= getSize(charMap->map[idxOfKey(s)]);
+        if(strcmp(mode,"easy")==0){
+        if (setSize > max){
+            max= setSize;
+            word = malloc((strlen(options[i]) + 1) * sizeof(char));
+            strcpy(word, options[i]);
+        }
+    }
+       else if(strcmp(mode,"hard")==0){
+        if(setSize<minSetSize){
+             minSetSize=setSize;
+            word = malloc((strlen(options[i])+1)*sizeof(char));
+            strcpy(word, options[i]);
+        }}
+       
+    freeWordArr(options, wordSetSize);
+
+    return word;
+}}
 char *medium(char lastletter, CharMap *charmap)
 {
     char *words = NULL;
