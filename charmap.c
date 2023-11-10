@@ -5,9 +5,6 @@
 
 CharMap* initializeCharMap() {
     CharMap* charMap = (CharMap*)malloc(sizeof(CharMap));
-    if (charMap == NULL) {
-        return NULL; 
-    }
 
     for (int i = 0; i < 26; i++) {
         charMap->map[i] = createSet();
