@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "charmap.h"
+#include "spellmaster.c"
 
 void playGame(char p1Name[], char p2Name[], CharMap* charMap);
 void fileReading(CharMap* charMap);
