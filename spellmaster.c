@@ -38,7 +38,7 @@ char *medium(char lastletter, CharMap *charmap)
     char *words = NULL;
     int size = getSize(charmap->map[idxOfKey(lastletter)]);
 
-    char **options = settoarr(charmap->map[idxOfKey(lastletter)]);
+    char **options = SettoArr(charmap->map[idxOfKey(lastletter)]);
     int *wordfrequencies = malloc(size * sizeof(int));
 
 
@@ -55,7 +55,6 @@ char *medium(char lastletter, CharMap *charmap)
     freeWordArr(options , wordfrequencies);
     return words;
 }
-
 int compare(const void *a, const void *b)
 {
     return (*(int *)a - *(int *)b);
