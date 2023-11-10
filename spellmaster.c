@@ -3,6 +3,7 @@
 #include <string.h>
 #include "set.h"
 #include "charmap.h"
+#include <time.h>
 const char name[]= "spellmaster";
 
 char* Mode(char lastChar, CharMap* charMap,char* mode){
