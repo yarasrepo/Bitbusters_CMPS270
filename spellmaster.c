@@ -7,6 +7,9 @@
 const char name[]= "spellmaster";
 
 char* Mode(char lastChar, CharMap* charMap,char* mode){
+     if(lastChar == '!'){
+        return ModeHelper(charMap);
+    }
     int max=0;
     char* word=NULL;
     int wordSetSize= getSize(charMap->map[idxOfKey(lastChar)]);
