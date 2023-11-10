@@ -35,6 +35,33 @@ char* Mode(char lastChar, CharMap* charMap,char* mode){
     return word;
 }}
 
+char* ModeHelper (CharMap* charMap){
+    int max=0;
+    int s;
+    int idx;
+    for(int i=0; i< 26; i++){
+        s= getSize(charMap->map[i]);
+
+        if (s > max){
+            max= s;
+            idx=i;
+        }
+    }
+    
+    // if (idx >= 0 && idx < 26) 
+    char lastchar= (char)(idx + 'a');
+
+    for (int i=0; i< 26; i++){
+        char** wordsInSet= SettoArr(charMap->map[i]);
+        for (int j=0; j< getSize(charMap->map[i]); j++){
+            if (wordsInSet[j][strlen(wordsInSet[j])-1] == lastchar)
+                return wordsInSet[j];
+        }
+    }
+
+    return NULL;
+}
+
 char *medium(char lastletter, CharMap *charmap)
 {
     char *words = NULL;
