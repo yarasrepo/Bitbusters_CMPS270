@@ -129,6 +129,10 @@ void removeFromSet(Set* set, const char* element) {
         return; 
     }
 
+    if (!isInSet(set, element)){
+        return;
+    }
+
     SetNode* current = set->head;
     SetNode* prev = NULL;
 
