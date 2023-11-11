@@ -41,7 +41,7 @@ void addToSet(Set* set, const char* element) {
 }
 
 int isInSet(const Set* set, const char* element) {
-    if (set == NULL || element == NULL) {
+    if (set->head == NULL || element == NULL) {
         return 0; 
     }
 
@@ -58,7 +58,7 @@ int isInSet(const Set* set, const char* element) {
 
 
 int getSize(const Set* set) {
-    if (set == NULL) {
+    if (set->head == NULL) {
         return 0;
     }
 
@@ -73,8 +73,8 @@ int getSize(const Set* set) {
 }
 
 void printSet(const Set* set){
-    if (set == NULL) {
-        printf("set is empty");
+    if (set->head == NULL) {
+        printf("set is empty\n");
         return;
     }
 
@@ -125,10 +125,18 @@ void freeWordArr(char** wordArr, int size) {
 }
 
 void removeFromSet(Set* set, const char* element) {
-    if (set == NULL || element == NULL) {
+    if (set->head == NULL || element == NULL) {
         return; 
     }
 
+    if (!isInSet(set, element)){
+        return;
+    }
+
+    if (getSize(set)==1){
+        set->head = NULL;
+    }
+    
     SetNode* current = set->head;
     SetNode* prev = NULL;
 
@@ -152,7 +160,7 @@ void removeFromSet(Set* set, const char* element) {
 
 
 void clearSet(Set* set) {
-    if (set == NULL) {
+    if (set->head == NULL) {
         return;
     }
 
@@ -168,7 +176,7 @@ void clearSet(Set* set) {
 }
 
 void destroySet(Set* set) {
-    if (set == NULL) {
+    if (set->head == NULL) {
         return;
     }
 

@@ -192,30 +192,29 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
             {
                 printf("No more words to choose from! %s wins\n",p1Name);
                 return;
-        }
+            }
       
         }
         else {
-          
             if (i==1){
                 strcpy(word,Mode('!',charMap,mode));
             }
             else {
                 char lastChar = lastword[strlen(lastword)-1];
-                if(strcasecmp(mode,"medium")){
-                    strcpy(word,medium(lastChar,charMap));
-                }
-                else {
-                    printf("reached 209");
-                    strcpy(word,Mode(lastChar,charMap,mode));
-                    printf("reached 211");
-                }
+                strcpy(word,Mode(lastChar,charMap,mode));
             }
 
-            printf("The Bot chose %s\n", word);
+            printf("Spellmaster chose %s\n", word);
         }
+        printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
         removeFromSet(charMap->map[idxOfKey(word[0])], word);
+        printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
+
         addToSet(usedWords, word);
+
+        if (strcasecmp(mode, "easy") == 0){
+            printSet(usedWords);
+        }
 
         if ((i%2)+1==  1){
             printf("Good Spell!!\n");
