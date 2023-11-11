@@ -14,7 +14,7 @@ char* Mode(char lastChar, CharMap* charMap,char* mode){
     char* word=NULL;
     int wordSetSize= getSize(charMap->map[idxOfKey(lastChar)]);
     char** options= SettoArr(charMap->map[idxOfKey(lastChar)]);
-    int minSetSize = size_of(options)/size_of(options[0]);
+    int minSetSize = sizeof(options)/sizeof(options[0]);
     
     for (int i=0; i<wordSetSize; i++){
         char s= options[i][strlen(options[i]) - 1];
