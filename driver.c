@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
 #include "spellmaster.h"
+
 void playGame(char p1Name[], char p2Name[], CharMap *charMap);
 void fileReading(CharMap *charMap);
 void playWithBot(char p1Name[], CharMap *charMap, char mode[]);
@@ -32,7 +32,7 @@ int main()
     }
     else
     {
-        playWithBot(p1Name,charMap,"easy");
+        playWithBot(p1Name, charMap, "easy");
     }
 
     destroyCharMap(charMap);
@@ -42,7 +42,6 @@ int main()
 
 void playGame(char p1Name[], char p2Name[], CharMap *charMap)
 {
-
     srand(time(NULL));
     printf("tossing coin...\n");
     int coinToss = rand() % 2;
@@ -142,8 +141,14 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
     printf("tossing coin...\n");
     int coinToss = rand() % 2;
     char word[100];
-    printf("Player %d starts!\n", coinToss + 1);
-    scanf("%s", word);
+    
+    if (coinToss== 0){
+        printf("%s starts!\n", p1Name);
+    }
+    else{
+        printf("Spellmaster starts!\n");
+    }
+
     Set *usedWords = createSet();
 
     int i = coinToss;
@@ -151,63 +156,67 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
     
     while (i < 1000  )
     {
-        if((i%2)+1==  1){
-        printf("Player %d choose a word from the list: ", i % 2 + 1);
-        scanf("%s", word);
+        if ((i%2)+1==  1){
 
-        char firstChar = word[0];
+            printf("%s choose a word from the list: ", p1Name);
+            scanf("%s", word);
 
-        // checking if the word is in the list
-        if (isInCharMap(charMap, firstChar, word) == 0)
-        {
-            printf("Word is not in the list! spellMaster wins!\n");
-            return;
-        }
+            char firstChar = word[0];
 
-        // checking if the word is already used
-        else if (isInSet(usedWords, word) == 1 && i != coinToss)
-        {
-            printf("Word already used! spellMaster wins!\n");
-            return;
-        }
+            // checking if the word is in the list
+            if (isInCharMap(charMap, firstChar, word) == 0)
+            {
+                printf("Word is not in the list! spellMaster wins!\n");
+                return;
+            }
 
-        // checking if the word starts with the same character that the last word ends in
-        else if (lastword[strlen(lastword) - 1] != word[0] && i != coinToss)
-        {
-            printf("The word does not start with the last letter of the previous word! SpellMaster wins\n");
-            return;
-        }
-      
+            // checking if the word is already used
+            else if (isInSet(usedWords, word) == 1 && i != coinToss)
+            {
+                printf("Word already used! spellMaster wins!\n");
+                return;
+            }
 
-        char lastChar = word[strlen(word) - 1];
-        Set *options = charMap->map[idxOfKey(lastChar)];
+            // checking if the word starts with the same character that the last word ends in
+            else if (lastword[strlen(lastword) - 1] != word[0] && i != coinToss)
+            {
+                printf("The word does not start with the last letter of the previous word! SpellMaster wins\n");
+                return;
+            }
+        
 
-        if (getSize(options) == 0)
-        {
-            printf("No more words to choose from! %s wins\n",p1Name);
-            return;
+            char lastChar = word[strlen(word) - 1];
+            Set *options = charMap->map[idxOfKey(lastChar)];
+
+            if (getSize(options) == 0)
+            {
+                printf("No more words to choose from! %s wins\n",p1Name);
+                return;
         }
       
         }
         else {
           
             if (coinToss==1){
-                 strcpy(word,Mode('!',charMap,mode));
-                 
+                strcpy(word,Mode('!',charMap,mode));
             }
-          else {
-            char lastChar = lastword[strlen(lastword)-1];
-            if(strcasecmp(mode,"medium")){
-                strcpy(word,medium(lastChar,charMap));
+            else {
+                char lastChar = lastword[strlen(lastword)-1];
+                if(strcasecmp(mode,"medium")){
+                    strcpy(word,medium(lastChar,charMap));
+                }
+                else {
+                    printf("reached 209");
+                    strcpy(word,Mode(lastChar,charMap,mode));
+                    printf("reached 211");
+                }
             }
-           else {
-            strcpy(word,Mode(lastChar,charMap,mode));
-           }
-            
-        }}
+
+            printf("The Bot chose %s\n", word);
+        }
         removeFromSet(charMap->map[idxOfKey(word[0])], word);
         addToSet(usedWords, word);
-        printf("Good Spell!!");
+        printf("Good Spell!!\n");
         strcpy(lastword, word);
         i++;
 }
