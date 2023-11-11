@@ -6,7 +6,7 @@
 #include "spellmaster.c"
 void playGame(char p1Name[], char p2Name[], CharMap *charMap);
 void fileReading(CharMap *charMap);
-
+void playWithBot(char p1Name[], CharMap *charMap, char mode[]);
 int main()
 {
     CharMap *charMap = initializeCharMap();
