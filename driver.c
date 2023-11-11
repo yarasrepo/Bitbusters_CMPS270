@@ -197,7 +197,7 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         }
         else {
           
-            if (coinToss==1){
+            if (i==1){
                 strcpy(word,Mode('!',charMap,mode));
             }
             else {
@@ -216,7 +216,11 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         }
         removeFromSet(charMap->map[idxOfKey(word[0])], word);
         addToSet(usedWords, word);
-        printf("Good Spell!!\n");
+
+        if ((i%2)+1==  1){
+            printf("Good Spell!!\n");
+        }
+        
         strcpy(lastword, word);
         i++;
 }
