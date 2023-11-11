@@ -68,25 +68,25 @@ char* ModeHelper (CharMap* charMap){
 char *medium(char lastletter, CharMap *charmap)
 {
     char *words = NULL;
-    int size = getSize(charmap->map[idxofkey(lastletter)]);
+    int size = getSize(charmap->map[idxOfKey(lastletter)]);
 
-    char **options = settoarr(charmap->map[idxofkey(lastletter)]);
-    int wordfrequencies[] = size;
+    char **options = SettoArr(charmap->map[idxOfKey(lastletter)]);
+    int *wordfrequencies = malloc(size * sizeof(int));
+
 
     for (int i = 0; i < size; i++)
     {
         char s = options[i][strlen(options[i]) - 1];
-        int setsize = getSize(charmap->map[idxofkey(s)]);// getting the number of words for each letter 
+        int setsize = getSize(charmap->map[idxOfKey(s)]);// getting the number of words for each letter 
         wordfrequencies[i] = setsize; // we're filling the array of the number of words of each letter in map
     }
     qsort(wordfrequencies, size, sizeof(int), compare);
     int medium = wordfrequencies[sizeof(wordfrequencies) / 2];// getting the medium frequency then getting the words at it 
     words = malloc(strlen(options[medium] + 1) * sizeof(char));
-    strcopy(words, options[medium]);
+    strcpy(words, options[medium]);
+    freeWordArr(options , wordfrequencies);
     return words;
-    free(options);
 }
-#include <stdlib.h>
 
 int compare(const void *a, const void *b)
 {
