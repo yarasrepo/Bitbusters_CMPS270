@@ -7,14 +7,19 @@
 const char name[]= "spellmaster";
 
 char* Mode(char lastChar, CharMap* charMap,char* mode){
-     if(lastChar == '!'){
+    if(lastChar == '!'){
         return ModeHelper(charMap);
     }
+
+    if  (strcasecmp(mode, "medium")==0){
+        return medium(lastChar, charMap);
+    }
+
     int max=0;
     char* word=NULL;
     int wordSetSize= getSize(charMap->map[idxOfKey(lastChar)]);
     char** options= SettoArr(charMap->map[idxOfKey(lastChar)]);
-    int minSetSize = sizeof(options)/sizeof(options[0]);
+    int minSetSize = 0;
     
     for (int i=0; i<wordSetSize; i++){
         char s= options[i][strlen(options[i]) - 1];
@@ -32,11 +37,10 @@ char* Mode(char lastChar, CharMap* charMap,char* mode){
             word = malloc((strlen(options[i])+1)*sizeof(char));
             strcpy(word, options[i]);
         }}
-       
+    }
     freeWordArr(options, wordSetSize);
-
     return word;
-}}
+}
 
 char* ModeHelper (CharMap* charMap){
     int max=0;
@@ -71,8 +75,7 @@ char *medium(char lastletter, CharMap *charmap)
     int size = getSize(charmap->map[idxOfKey(lastletter)]);
 
     char **options = SettoArr(charmap->map[idxOfKey(lastletter)]);
-    int *wordfrequencies = malloc(size * sizeof(int));
-
+    int wordfrequencies[size] ;
 
     for (int i = 0; i < size; i++)
     {
@@ -84,9 +87,10 @@ char *medium(char lastletter, CharMap *charmap)
     int medium = wordfrequencies[sizeof(wordfrequencies) / 2];// getting the medium frequency then getting the words at it 
     words = malloc(strlen(options[medium] + 1) * sizeof(char));
     strcpy(words, options[medium]);
-    freeWordArr(options , size);
     return words;
+    free(options);
 }
+
 
 int compare(const void *a, const void *b)
 {
