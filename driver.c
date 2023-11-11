@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "charmap.h"
-#include "spellmaster.c"
+
+#include "spellmaster.h"
 void playGame(char p1Name[], char p2Name[], CharMap *charMap);
 void fileReading(CharMap *charMap);
 void playWithBot(char p1Name[], CharMap *charMap, char mode[]);
@@ -32,7 +32,7 @@ int main()
     }
     else
     {
-        playGame(p1Name, "bot", charMap);
+        playWithBot(p1Name,charMap,"easy");
     }
 
     destroyCharMap(charMap);
