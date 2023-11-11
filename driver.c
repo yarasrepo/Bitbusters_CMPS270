@@ -206,9 +206,9 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
 
             printf("Spellmaster chose %s\n", word);
         }
-        printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
+        // printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
         removeFromSet(charMap->map[idxOfKey(word[0])], word);
-        printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
+        // printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
 
         addToSet(usedWords, word);
 
