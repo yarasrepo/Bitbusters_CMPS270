@@ -183,17 +183,6 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
                 printf("The word does not start with the last letter of the previous word! SpellMaster wins\n");
                 return;
             }
-        
-
-            char lastChar = word[strlen(word) - 1];
-            Set *options = charMap->map[idxOfKey(lastChar)];
-
-            if (getSize(options) == 0)
-            {
-                printf("No more words to choose from! %s wins\n",p1Name);
-                return;
-            }
-      
         }
         else {
             if (i==1){
@@ -206,9 +195,17 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
 
             printf("Spellmaster chose %s\n", word);
         }
-        // printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
+
+        char lastChar = word[strlen(word) - 1];
+            Set *options = charMap->map[idxOfKey(lastChar)];
+
+        if (getSize(options) == 0)
+        {
+            printf("No more words to choose from! %s wins\n", ((i % 2) + 1 != 1) ? "Spellmaster" : p1Name);
+            return;
+        }
+
         removeFromSet(charMap->map[idxOfKey(word[0])], word);
-        // printf("%d\n", getSize(charMap->map[idxOfKey(word[0])]));
 
         addToSet(usedWords, word);
 
