@@ -1,5 +1,5 @@
 #ifndef SPELLMASTER_H
-#define SPELLMASTER
+#define SPELLMASTER_H
 #endif
 #include <stdio.h>
 #include <stdlib.h>
