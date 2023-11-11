@@ -16,6 +16,7 @@ int main()
     char p1Name[30];
     char p2Name[30];
     char choice[30];
+    char mode[30];
 
     printf("Welcome to spellmaster! would you like to play against a bot or a player?\n ");
     scanf("%s", &choice);
@@ -32,7 +33,9 @@ int main()
     }
     else
     {
-        playWithBot(p1Name, charMap, "easy");
+        printf("What difficulty mode would you like to play on? (easy, medium, hard)\n\n");
+        scanf("%s", &mode);
+        playWithBot(p1Name, charMap, mode);
     }
 
     destroyCharMap(charMap);
@@ -103,38 +106,7 @@ void playGame(char p1Name[], char p2Name[], CharMap *charMap)
     }
 }
 
-void fileReading(CharMap *charMap)
-{
-    char fileName[100];
 
-    printf("Enter the file name: ");
-    scanf("%s", &fileName);
-
-    FILE *file = fopen(fileName, "r");
-
-    if (file == NULL)
-    {
-        printf("Failed to open the file '%s'.\n", fileName);
-        return;
-    }
-
-    printf("File '%s' opened successfully.\n", fileName);
-
-    char word[100];
-    Set *wordSet = createSet();
-    int sizeFirstLine = fscanf(file, "%d", &sizeFirstLine);
-    while (fscanf(file, " %99s", word) == 1)
-    {
-        addToSet(wordSet, word);
-        addToCharMap(charMap, word[0], word);
-    }
-
-    fclose(file);
-
-    printf("Words in the set:\n");
-    printSet(wordSet);
-    destroySet(wordSet);
-}
 void playWithBot(char p1Name[], CharMap *charMap, char mode[])
 {
     srand(time(NULL));
@@ -197,7 +169,7 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         }
 
         char lastChar = word[strlen(word) - 1];
-            Set *options = charMap->map[idxOfKey(lastChar)];
+        Set *options = charMap->map[idxOfKey(lastChar)];
 
         if (getSize(options) == 0)
         {
@@ -210,6 +182,7 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         addToSet(usedWords, word);
 
         if (strcasecmp(mode, "easy") == 0){
+            printf("The used words so far are: ");
             printSet(usedWords);
         }
 
@@ -219,5 +192,39 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         
         strcpy(lastword, word);
         i++;
+    }
 }
+
+
+void fileReading(CharMap *charMap)
+{
+    char fileName[100];
+
+    printf("Enter the file name: ");
+    scanf("%s", &fileName);
+
+    FILE *file = fopen(fileName, "r");
+
+    if (file == NULL)
+    {
+        printf("Failed to open the file '%s'.\n", fileName);
+        return;
+    }
+
+    printf("File '%s' opened successfully.\n", fileName);
+
+    char word[100];
+    Set *wordSet = createSet();
+    int sizeFirstLine = fscanf(file, "%d", &sizeFirstLine);
+    while (fscanf(file, " %99s", word) == 1)
+    {
+        addToSet(wordSet, word);
+        addToCharMap(charMap, word[0], word);
+    }
+
+    fclose(file);
+
+    printf("Words in the set:\n");
+    printSet(wordSet);
+    destroySet(wordSet);
 }
