@@ -84,7 +84,7 @@ char *medium(char lastletter, CharMap *charmap)
     int medium = wordfrequencies[sizeof(wordfrequencies) / 2];// getting the medium frequency then getting the words at it 
     words = malloc(strlen(options[medium] + 1) * sizeof(char));
     strcpy(words, options[medium]);
-    freeWordArr(options , wordfrequencies);
+    freeWordArr(options , size);
     return words;
 }
 
