@@ -112,7 +112,7 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
     srand(time(NULL));
     printf("tossing coin...\n");
     int coinToss = rand() % 2;
-    char word[100];
+    char* word = (char*)malloc(100*sizeof(char));
     
     if (coinToss== 0){
         printf("%s starts!\n", p1Name);
@@ -125,16 +125,19 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
 
     int i = coinToss;
     char lastword[1000];
-    
-    while (i < 1000  )
+    char *selectedWord ;
+    while (i<1000)
     {
+         char lastChar = word[strlen(word) - 1];
+        Set *options = charMap->map[idxOfKey(lastChar)];
         if ((i%2)+1==  1){
-
+            
             printf("%s choose a word from the list: ", p1Name);
             scanf("%s", word);
-
+            
             char firstChar = word[0];
-
+            
+           
             // checking if the word is in the list
             if (isInCharMap(charMap, firstChar, word) == 0)
             {
@@ -157,19 +160,31 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
             }
         }
         else {
+            printf("entered else\n");
             if (i==1){
-                strcpy(word,Mode('!',charMap,mode));
+               selectedWord = Mode('!', charMap, mode);
+                
             }
             else {
                 char lastChar = lastword[strlen(lastword)-1];
-                strcpy(word,Mode(lastChar,charMap,mode));
+                char *selectedWord = Mode(lastChar, charMap, mode);
             }
+            
+                if (selectedWord != NULL) {
+                     strcpy(word, selectedWord);
+                    free(selectedWord);  // Free the allocated memory
+            } 
+            else {
+               // Handle the case when no word is selected
+                 printf("No word selected.\n");
+}
+                
+            
 
             printf("Spellmaster chose %s\n", word);
         }
 
-        char lastChar = word[strlen(word) - 1];
-        Set *options = charMap->map[idxOfKey(lastChar)];
+       
 
         if (getSize(options) == 0)
         {
@@ -189,7 +204,7 @@ void playWithBot(char p1Name[], CharMap *charMap, char mode[])
         if ((i%2)+1==  1){
             printf("Good Spell!!\n");
         }
-        
+        printf("hi");
         strcpy(lastword, word);
         i++;
     }

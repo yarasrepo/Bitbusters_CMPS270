@@ -7,48 +7,53 @@ const char name[] = "spellmaster";
 
 char *Mode(char lastChar, CharMap *charMap, char *mode)
 {
-    if (lastChar == '!')
-    {
-        return ModeHelper(charMap);
-    }
+    int idx =0;
+  
 
     if (strcasecmp(mode, "medium") == 0)
     {
         return medium(lastChar, charMap);
     }
 
-    int max = 0 ;
-    char *word = NULL;
+   
+    char *wordT = NULL;
     int wordSetSize = getSize(charMap->map[idxOfKey(lastChar)]);
     char **options = SettoArr(charMap->map[idxOfKey(lastChar)]);
     int minSetSize = 0;
-
+     int max = wordSetSize ;
     for (int i = 0; i < wordSetSize; i++)
     {
         char s = options[i][strlen(options[i]) - 1];
         int setSize = getSize(charMap->map[idxOfKey(s)]);
-        if (strcmp(mode, "easy") == 0)
+        if (strcmp(mode, "easy")== 0 || lastChar == '!')
         {
             if (setSize > max)
             {
                 max = setSize;
-                word = malloc((strlen(options[idxOfKey(lastChar)]) + 1) * sizeof(char));
-                strcpy(word, options[i]);
+                idx =i;
+               
             }
+            wordT = malloc((strlen(options[idxOfKey(lastChar)]) + 1) * sizeof(char));
+                strcpy(wordT, options[idx]);
+
         }
         else if (strcmp(mode, "hard") == 0)
         {
             if (setSize < minSetSize)
             {
                 minSetSize = setSize;
-                word = malloc((strlen(options[lastChar]) + 1) * sizeof(char));
-                strcpy(word, options[i]);
+                idx-i;
+                //continue;
+               
             }
+             wordT = malloc((strlen(options[lastChar]) + 1) * sizeof(char));
+                
+                strcpy(wordT, options[idx]);
         }
     }
-    freeWordArr(options, wordSetSize);
-    system("pause");
-    return word;
+   freeWordArr(options, wordSetSize);
+     
+    return wordT;
 }
 
 char *ModeHelper(CharMap *charMap)
@@ -95,7 +100,7 @@ char *medium(char lastletter, CharMap *charmap)
     {
         char s = options[i][strlen(options[i]) - 1];
         int setsize = getSize(charmap->map[idxOfKey(s)]); // getting the number of words for each letter
-        wordfrequencies[i] = setsize;                     // we're filling the array with the number of words for each letter in map
+        wordfrequencies[i] = setsize;                     // we're filling the array of the number of words of each letter in map
     }
     qsort(wordfrequencies, size, sizeof(int), compare);
     int medium = wordfrequencies[sizeof(wordfrequencies) / 2]; // getting the medium frequency then getting the words at it
