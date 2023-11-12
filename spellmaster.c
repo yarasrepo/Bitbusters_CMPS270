@@ -95,7 +95,7 @@ char *medium(char lastletter, CharMap *charmap)
     {
         char s = options[i][strlen(options[i]) - 1];
         int setsize = getSize(charmap->map[idxOfKey(s)]); // getting the number of words for each letter
-        wordfrequencies[i] = setsize;                     // we're filling the array of the number of words of each letter in map
+        wordfrequencies[i] = setsize;                     // we're filling the array with the number of words for each letter in map
     }
     qsort(wordfrequencies, size, sizeof(int), compare);
     int medium = wordfrequencies[sizeof(wordfrequencies) / 2]; // getting the medium frequency then getting the words at it
